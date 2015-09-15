@@ -37,8 +37,9 @@ public class LivroDAO implements DAO<Livro> {
     public void remove(Livro e) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ColecoesPU");
         EntityManager em = emf.createEntityManager();
+        Livro livro = em.find(Livro.class, e.getId());
         em.getTransaction().begin();
-        em.remove(e);
+        em.remove(livro);
         em.getTransaction().commit();
         em.close();
     }
@@ -51,6 +52,13 @@ public class LivroDAO implements DAO<Livro> {
         List<Livro> livros = query.getResultList();
         em.close();
         return livros;
+    }
+    
+    public Livro readById(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ColecoesPU");
+        EntityManager em = emf.createEntityManager();
+        Livro livro = em.find(Livro.class, id);
+        return livro;
     }
     
 }

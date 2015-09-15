@@ -37,8 +37,9 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
     public void remove(Emprestimo e) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ColecoesPU");
         EntityManager em = emf.createEntityManager();
+        Emprestimo emprestimo = em.find(Emprestimo.class, e.getId());
         em.getTransaction().begin();
-        em.remove(e);
+        em.remove(emprestimo);
         em.getTransaction().commit();
         em.close();
     }

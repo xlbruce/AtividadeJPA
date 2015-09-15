@@ -37,8 +37,9 @@ public class AmigoDAO implements DAO<Amigo> {
     public void remove(Amigo e) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ColecoesPU");
         EntityManager em = emf.createEntityManager();
+        Amigo amigo = em.find(Amigo.class, e.getId());
         em.getTransaction().begin();
-        em.remove(e);
+        em.remove(amigo);
         em.getTransaction().commit();
         em.close();
     }
@@ -51,6 +52,12 @@ public class AmigoDAO implements DAO<Amigo> {
         List<Amigo> amigos = query.getResultList();
         em.close();
         return amigos;
+    }
+    public Amigo readById(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ColecoesPU");
+        EntityManager em = emf.createEntityManager();
+        Amigo amigo = em.find(Amigo.class, id);        
+        return amigo;
     }
     
 }
